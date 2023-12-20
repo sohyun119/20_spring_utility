@@ -27,7 +27,7 @@ public class TransactionService {
 		
 	}
 	
-	
+	@Transactional
 	public void addOrder() {
 		
 		transactionDAO.updatePoint();
