@@ -22,7 +22,7 @@ public class TransactionService {
 	public void addAccountTransfer() {
 	
 		transactionDAO.updateSendMoney();
-		System.out.println(0/0); // 에러 발생
+		//System.out.println(0/0); // 에러 발생
 		transactionDAO.updateRecvMoney();
 		
 	}
@@ -32,7 +32,7 @@ public class TransactionService {
 		
 		transactionDAO.updatePoint();
 		transactionDAO.updateCartCnt();
-		System.out.println(0/0); // 에러 발생
+		//System.out.println(0/0); // 에러 발생
 		transactionDAO.updateOrderCnt();
 		
 	}
