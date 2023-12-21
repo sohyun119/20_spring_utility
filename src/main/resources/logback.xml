@@ -43,14 +43,14 @@
 		 -->
 			 
 				
-		 	<!-- log4jdbc 설정 -->
+		 	<!-- log4jdbc 설정  // sqlOnly 나 sqltiming 을 보통 많이 쓴다.-->
 		    <logger name="jdbc.sqlonly" level="info" >
 		    	<appender-ref ref="DAILY_FILE"/>
 		    </logger>
 		    <logger name="jdbc.sqltiming" level="off" />
 		    <logger name="jdbc.audit" level="off" />
 		    <logger name="jdbc.resultset" level="off" />         
-		    <logger name="jdbc.resultsettable" level="info" >
+		    <logger name="jdbc.resultsettable" level="off" >
 		    	<appender-ref ref="DAILY_FILE"/>
 		    </logger>
 		    <logger name="jdbc.connection" level="off" />
