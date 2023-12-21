@@ -49,8 +49,13 @@ public class FileController {
 		
 		String responseMessage = "fail";
 		
-		File targetFile = new File(fileRepositoryPath + upFile.getOriginalFilename()); // 파일 객체를 생성한다. 
-		upFile.transferTo(targetFile); // transferTo(파일객체) 메서드를 사용하여 파일저장소에 파일을 저장한다. 
+		if(upFile.getOriginalFilename().isEmpty()) { //전송된 파일이 있으면
+			
+			File targetFile = new File(fileRepositoryPath + upFile.getOriginalFilename()); // 파일 객체를 생성한다. 
+			upFile.transferTo(targetFile); // transferTo(파일객체) 메서드를 사용하여 파일저장소에 파일을 저장한다. 
+			
+			responseMessage = "success";
+		}
 		
 		return responseMessage;
 	}
