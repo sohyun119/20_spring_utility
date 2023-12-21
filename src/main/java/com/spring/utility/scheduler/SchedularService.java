@@ -70,7 +70,7 @@ public class SchedularService {
 	@Autowired
 	private SchedularDAO schedularDAO;
 	
-	//@Scheduled(cron="*/10 40-50 20 * * *")
+	//@Scheduled(cron="*/10 * * * * *")
 	public void getProductList() { 
 		
 		System.out.println("ex) 00시 배치");
@@ -83,7 +83,7 @@ public class SchedularService {
 		
 	}
 	
-	@Scheduled(cron="*/10 * 19 20 12 *")
+	//@Scheduled(cron="*/10 * 19 20 12 *")
 	public void getBrandList() { 
 		
 		System.out.println("ex) 00시 배치");
