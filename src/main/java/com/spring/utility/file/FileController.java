@@ -2,12 +2,23 @@ package com.spring.utility.file;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -98,11 +109,90 @@ public class FileController {
 			}
 		
 		}
+		return responseMessage;
+	}
+	
+	
+	/*
+	
+	import org.springframework.core.io.InputStreamResource;
+	import org.springframework.core.io.Resource;
+	import org.springframework.core.io.UrlResource;
+	import org.springframework.http.ContentDisposition;
+	import org.springframework.http.HttpHeaders;
+	import org.springframework.http.HttpStatus;
+	import org.springframework.http.ResponseEntity;
+	import java.nio.file.Path;
+	import java.nio.file.Paths;
+	
+*/
+	
+	@GetMapping("/thumbnails")
+	@ResponseBody
+	public Resource thumbnails(@RequestParam("fileName") String fileName) throws MalformedURLException {
+		// new UrlResource("file:" + 파일접근경로) 객체를 반환하여 이미지를 조회한다.
+		return new UrlResource("file:" + fileRepositoryPath + fileName); 
+	}
+	
+	@GetMapping("/downloadFile")
+	public ResponseEntity<Object> downloadFile(@RequestParam("fileName") String fileName) throws MalformedURLException{
 		
+		String downloadFile = fileRepositoryPath + fileName;  // 이미지 경로 수정하여 사용
+		
+		try {
+			
+			Path filePath = Paths.get(downloadFile);
+			Resource resource = new InputStreamResource(Files.newInputStream(filePath));
+			
+			File file = new File(downloadFile);
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());  
+			return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
+			
+		} catch(Exception e) {
+			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
+		}
+	        
+	}
+	
+	@PostMapping("/delete")
+	@ResponseBody
+	public String delete(@RequestParam("deleteFileName") String deleteFileName) {
+		
+		String responseMessage = "fail";
+		
+		File deleteFile = new File(fileRepositoryPath + deleteFileName);
+		
+		if(deleteFile.exists()) { // 파일이 존재하면
+			deleteFile.delete();
+			responseMessage = "success";
+		}
 		
 		return responseMessage;
-		
 	}
+	
+	
+	@PostMapping("/update")
+	@ResponseBody
+	public String update(@RequestParam("deleteFileName") String deleteFileName
+						,@RequestParam("modifyFile") MultipartFile modifyFile) throws IllegalStateException, IOException {
+		
+		String responseMessage = "fail";
+		
+		File deleteFile = new File(fileRepositoryPath + deleteFileName);
+		if(deleteFile.exists() && !modifyFile.getOriginalFilename().isEmpty()) {
+			deleteFile.delete(); // 파일삭제
+			
+			modifyFile.transferTo(new File(fileRepositoryPath + modifyFile.getOriginalFilename()));
+			
+			responseMessage = "success";
+		}
+		
+		return responseMessage;
+	}
+	
+	
 	
 	
 	
