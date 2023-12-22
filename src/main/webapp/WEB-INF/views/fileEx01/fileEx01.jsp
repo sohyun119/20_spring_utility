@@ -12,6 +12,7 @@
 		2) enctype="multipart/form-data"
 	
 	 -->
+	 
 	<form action="upload1" method="post" enctype="multipart/form-data">
 		<h3>단일 파일 업로드</h3>
 		<table border="1" >			
@@ -26,20 +27,20 @@
 	</form>	
 	<br><hr><br>
 	
-	<form>
+	<form action="upload2" method="post" enctype="multipart/form-data">
 		<h3>다중 파일 업로드1</h3>
 		<table border="1" >			
 			<tr>
 				<td>업로드 파일1</td>
-				<td></td>
+				<td><input type="file" name="files"></td>
 			</tr>
 			<tr>
 				<td>업로드 파일2</td>
-				<td></td>
+				<td><input type="file" name="files"></td>
 			</tr>
 			<tr>
 				<td>업로드 파일3</td>
-				<td></td>
+				<td><input type="file" name="files"></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="right"><input type="submit" value="업로드" ></td>
@@ -49,12 +50,12 @@
 	<br><hr><br>	
 	
 	
-	<form>
+	<form action="upload2" method="post" enctype="multipart/form-data">
 		<h3>다중파일 업로드2(멀티플)</h3>
 		<table border="1" >			
 			<tr>
 				<td>다중파일 업로드</td>
-				<td> </td>
+				<td><input type="file" multiple="multiple" name="files"></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="right"><input type="submit" value="업로드" ></td>
